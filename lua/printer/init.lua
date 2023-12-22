@@ -120,8 +120,8 @@ local function input_below(text)
     if printer == nil then
         notify(
             "no formatter defined for "
-            .. filetype
-            .. " filetype. See ':help Printer.setting_custom_formatters' on how to add formatter for this filetype."
+                .. filetype
+                .. " filetype. See ':help Printer.setting_custom_formatters' on how to add formatter for this filetype."
         )
         return
     end
@@ -147,8 +147,8 @@ local function yank(text)
     if printer == nil then
         notify(
             "no formatter defined for "
-            .. filetype
-            .. " filetype. See ':help Printer.setting_custom_formatters' on how to add formatter for this filetype."
+                .. filetype
+                .. " filetype. See ':help Printer.setting_custom_formatters' on how to add formatter for this filetype."
         )
         return
     end
@@ -237,6 +237,14 @@ Printer._normal_print_behavior = function()
         end
     end
 end
+---@private
+Printer._no_variable_print_behavior = function()
+    if CONFIG.behavior == "insert_below" then
+        input_below("")
+    elseif CONFIG.behavior == "yank" then
+        yank("")
+    end
+end
 
 local function operator_normal_behavior()
     vim.cmd([[set operatorfunc=v:lua.require'printer'._normal_print_behavior]])
@@ -271,6 +279,11 @@ Printer.setup = function(cfg_user)
             operator_normal_behavior,
             { expr = true, desc = "(printer.nvim) Operator keymap for printer.nvim" }
         )
+        vim.keymap.set("n", cfg_user.keymap .. "p", function()
+            return Printer._no_variable_print_behavior()
+        end, {
+            desc = "(printer.nvim) print without a variable",
+        })
         vim.keymap.set(
             "v",
             cfg_user.keymap,
