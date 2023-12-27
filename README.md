@@ -7,24 +7,26 @@ Neovim plugin that adds an operator which allows adding printing/logging stateme
 ### Installation
 
 - With [lazy](https://github.com/folke/lazy.nvim)
+
 ```lua
 {
     'rareitems/printer.nvim',
     config = function()
         require('printer').setup({
-            keymap = "gp" -- Plugin doesn't have any keymaps by default
-          })
+            keymap = "gp" -- default keymap is `gp`
+    })
     end
 }
 ```
 
 - With [packer.nvim](https://github.com/wbthomason/packer.nvim)
+
 ```lua
 use {
     'rareitems/printer.nvim',
     config = function()
         require('printer').setup({
-            keymap = "gp" -- Plugin doesn't have any keymaps by default
+            keymap = "gp" -- default keymap is `gp`
           })
     end
 }
@@ -78,11 +80,11 @@ use {
           })
 
         -- keymap to always yank the debug print
-        vim.keymap.set("n", "gp", "<Plug>(printer_yank)") 
-        vim.keymap.set("v", "gp", "<Plug>(printer_yank)")  
+        vim.keymap.set("n", "gp", "<Plug>(printer_yank)")
+        vim.keymap.set("v", "gp", "<Plug>(printer_yank)")
 
         -- keymap to always insert below the debug print
-        vim.keymap.set("n", "gp", "<Plug>(printer_below)") 
+        vim.keymap.set("n", "gp", "<Plug>(printer_below)")
         vim.keymap.set("v", "gp", "<Plug>(printer_below)")
 
         -- You can use use '<Plug>printer_print' to call the pluging inside more advanced keymaps
